@@ -86,7 +86,11 @@ function processSingle(filePath) {
 			if ( bco ){
 				assert( typeof(bco.balance) == 'string', 'must be string');
 				assert( typeof(bco.value)   == 'number', 'must be number');
+
 				bc[bco.balance] += bco.value;
+				if(bc[bco.balance] < 0){
+					console.error(one.name,' comes earlier than expected !');
+				}
 			}
 		}
 		for(var k in bc){
