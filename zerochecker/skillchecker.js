@@ -13,6 +13,7 @@ var eventValidators={
 	invincibleend:function(){},
 	restingfree:function(){},
 	zfinished:function(){},
+	relocatetarget:function(){},
 	trigger:function(op){
 		if ( typeof(op.int) !== 'number'){
 			console.error('must be number for trigger int');
@@ -113,7 +114,7 @@ function main() {
 		if ( ! stat.isDirectory() ) {
 			continue;
 		}
-		if ( '.'===files[i] || '..' == files[i]) {
+		if ( '.'===files[i] || '..' == files[i] || 'node_modules' == files[i]) {
 			continue;
 		}
 
