@@ -5,6 +5,7 @@ var express = require("express");
 var fs = require("fs");
 var spawn = require("child_process").spawn;
 var app = express();
+var conf = require("./conf");
 var shared = path.resolve(__dirname, "./public");
 
 app.use(express.static(shared));
@@ -27,7 +28,7 @@ app.get("/compile", function(req, res){
     // And do the work
     //var exec = "C:/Program Files (x86)/CMake/bin/cmake-gui.exe";
     var exec = "ruby";
-    var path = "f:/Stuff/Ark/ChaseGame/frameworks/cocos2d-x/tools/cocos2d-console/bin/auto.rb";
+    var path = conf.script_path();
     var worker = spawn(exec, [path]);
     worker.stdout.on("data", function(data){
         process.stdout.write(data.toString("utf-8"));

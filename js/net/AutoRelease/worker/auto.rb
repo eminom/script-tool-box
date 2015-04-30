@@ -1,10 +1,9 @@
 #! ruby
-
-@dest = "F:/Stuff/Ark/AutoRelease/public/"
+require_relative "conf.rb"
 
 def doCleans
     puts "Cleans all"
-    cmd = "rm -rf \"#{@dest}*.apk\""
+    cmd = "rm -rf \"#{Conf.dest}*.apk\""
     system(cmd)
     puts cmd
     puts "done"
@@ -13,14 +12,14 @@ end
 def doCopies
     puts "\n\n\n\nCopying>>\n"
     suffix = ".apk"
-    Dir.glob("F:/Stuff/Ark/ChaseGame/publish/**/*#{suffix}") do |file|
+    Dir.glob("#{Conf.source_dir}**/*#{suffix}") do |file|
         fshort = File.basename(file)
         suf = File.extname(fshort)
         fshort = fshort.chomp(suf)
         #puts fshort
 
         mt = File.mtime file
-        target = @dest + fshort + mt.strftime("%Y%m%d_%H%M%S") + suf
+        target = Conf.dest + fshort + mt.strftime("%Y%m%d_%H%M%S") + suf
         if not File.exist?(target) or File.mtime(target) < mt then
             cmd = "cp -f \"#{file}\" \"#{target}\""
             if not system(cmd) then
