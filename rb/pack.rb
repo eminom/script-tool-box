@@ -1,5 +1,3 @@
-
-
 ###########################
 ###  Eminom             ###
 ### Game Sutdio Script  ###
@@ -27,10 +25,28 @@ def gen_tp_cmd(sheet_name, png_name, in_dir)
 end
 
 # print texturePacker
-cmd = gen_tp_cmd "role", "role", "role"
-if not system(cmd) then
-    puts "No"
-    puts cmd
-    puts $?
-    exit
+
+cur_path = File.absolute_path(__FILE__.encode("UTF-8"))
+cur_path = cur_path.chomp(File.basename(cur_path))  #Ends with a slash
+
+def checkDirs(opath)
+    excepts = ["bgs"]
+    Dir.glob("#{opath}**/") do |f|
+        next if opath == f
+        short = File.basename(f)
+        if not excepts.include?short then
+            yield short
+        end
+    end
 end
+
+checkDirs(cur_path){|s| 
+    cmd = gen_tp_cmd s, s, s
+    if not system(cmd) then
+        puts "No"
+        puts cmd
+        puts $?
+        exit
+    end    
+}
+
