@@ -1,0 +1,7 @@
+#!/usr/bin/perl -w
+use strict;
+for(`docker ps -a`){
+	my @w = grep{/\w+_\w+/} split /\s+/;
+	system("docker rm $w[0]") if @w;
+	die if $?;
+}
